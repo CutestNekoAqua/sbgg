@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/papercss@1.9.2/dist/paper.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="paper container">
+      <h1>Selbstbestimmungs Antrags-Hilfe</h1>
+      <p>Diese Website soll bei der Meldung deiner rechtlichen Transition helfen. Dazu musst du zuerst die Addresse des Standesamtes deines Geburtsortes, oder wenn nicht komfortabel, deines Wohnortes recherchieren.</p>
+      <p>Fülle danach einfach dieses Formular aus und wir generieren dir einen Brief, den du ausdrucken, unterschreiben und an das Standesamt per Post senden kannst. :)</p>
+
+        <b>Du musst alle deine Vornamen angeben und die Anzahl an Vorgaben darf sich nicht ändern. Laut dem Gesetz müssen gewählte Vornamen dem gewählten Geschlecht entsprechen. Um diesen Antrag ohne deine Eltern ausfüllen zu dürfen, musst du rechtlich über 18 Jahre alt sein.</b>
+        <b>Die Website speichert keine Daten. Die eingegebenen Daten werden ausschließlich zur Erstellung des PDF verwendet und nicht dauerhaft gespeichert oder weitergegeben. Es gibt keine Logs.<br /><br /> Anträge bitte erst ab 1. August versenden. (Wenn sie vor dem 1. August beim Standesamt ankommen, sind diese nicht gültig)</b>
+
+        <br />
+
+        <form action="/api">
+            <h3>Standesamt</h3>
+            <label>Name des Amtes</label><br />
+            <input type="text" id="amtname" name="amtname"><br>
+            <label>Straße & Hausnummer</label><br />
+            <input type="text" id="amtstreet" name="amtstreet"><br>
+            <label>Postleitzahl & Stadt</label><br />
+            <input type="text" id="amtcity" name="amtcity"><br>
+
+            <h3>Persönliche Daten</h3>
+            <label>Deine Vornamen, so wie sie bisher in deiner Geburtsurkunde und auf deinem Personalausweis stehen</label><br />
+            <input type="text" id="fname" name="fname"><br>
+            <label>Nachname</label><br />
+            <input type="text" id="lname" name="lname"><br>
+            <label>Straße & Hausnummer</label><br />
+            <input type="text" id="street" name="street"><br>
+            <label>Postleitzahl & Stadt</label><br />
+            <input type="text" id="city" name="city"><br>
+            <label>E-Mail</label><br />
+            <input type="email" id="email" name="email"><br>
+            <label>Handy oder Festnetz-Nummer</label><br />
+            <input type="tel" id="phone" name="phone"><br>
+            <label>Momentan gemeldetes Geschlecht</label><br /><br />
+            <input class="radio" type="radio" id="divers" name="prev_gender" value="divers">
+            <label for="divers" class="paper-radio">Divers</label><br><br />
+            <input class="radio" type="radio" id="weiblich" name="prev_gender" value="weiblich">
+            <label for="weiblich" class="paper-radio">Weiblich</label><br><br />
+            <input class="radio" type="radio" id="männlich" name="prev_gender" value="männlich">
+            <label for="männlich" class="paper-radio">Männlich</label><br /><br />
+            <input class="radio" type="radio" id="none" name="prev_gender" value="none">
+            <label for="none" class="paper-radio">Kein Geschlecht</label>
+
+            <h3>Deine Geburt</h3>
+            <label>Datum</label><br />
+            <input type="text" id="dob" name="dob"><br>
+            <label>Ort</label><br />
+            <input type="text" id="birthplace" name="birthplace"><br>
+
+            <h3>Deine Identität</h3>
+            <b>
+                Achtung! Deine(n) Name(n) nicht zu ändern, könnte zu starken Diskussionen mit dem Standesamt führen.
+                <br />
+                Da das Gesetz momentan noch neu ist gibt es noch keine gerichtlichen Urteile, wodurch das Gesetz den Ämtern und dir großen Interpretationsspielraum lässt. 
+
+                Jedoch wird ein klar weiblicher Vorname nicht mit einem männlichen Geschlecht (und umgedreht) durchgehen, außerdem ist für viele Standesämter die Kategorie "divers" und geschlechtsneutrale Vornamen relatives Neuland. Es gilt common sense!
+            </b>
+
+            <br /><br /><br />
+
+            <label for="changename" class="paper-radio">Ich möchte meine(n) Name(n) ändern</label><br />
+            <input type="checkbox" id="changename" name="changename" value="true">
+
+            <br />
+            <label>Neue Vornamen (gleiche Anzahl wie zuvor)</label><br />
+            <input type="text" id="post_fname" name="post_fname"><br>
+            
+            <br /><br />
+
+            <b>Neues Geschlecht</b><br /><br />
+
+            <style>
+                .radio {
+                    display: inline;
+                }
+            </style>
+
+            <input class="radio" type="radio" name="post_gender" value="xdivers">
+            <label for="xdivers" class="paper-radio">Divers</label><br><br />
+            <input class="radio" type="radio" name="post_gender" value="xweiblich">
+            <label for="xweiblich" class="paper-radio">Weiblich</label><br><br />
+            <input class="radio" type="radio" name="post_gender" value="xmännlich">
+            <label for="xmännlich" class="paper-radio">Männlich</label><br /><br />
+            <input class="radio" type="radio" name="post_gender" value="xnone">
+            <label for="xnone" class="paper-radio">Kein Geschlecht</label>
+
+            <br /><br />
+
+            <input type="submit" />
+
+            <br /><br />
+
+            <b>Du möchtest mich unterstützen? Supporte mich über <a href="https://ko-fi.com/aprilthepink">Ko-Fi.</a></b>
+
+            <br />
+
+            <b><a href="https://github.com/CutestNekoAqua/sbgg">Sourcecode</a></b>
+        </form>
+    </div>
+  </body>
+</html>

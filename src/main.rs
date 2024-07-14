@@ -3,14 +3,14 @@ use clap::Parser;
 
 #[get("/")]
 async fn hello() -> impl Responder {
-    let res = gen_pdf().await;
+    let res = gen_pdf();
     if let Ok(good) = res {
         return HttpResponse::Ok().body(good);
     }
     HttpResponse::UnprocessableEntity().body("Ein Fehler ist aufgetreten.")
 }
 
-async fn gen_pdf() -> anyhow::Result<Vec<u8>> {
+fn gen_pdf() -> anyhow::Result<Vec<u8>> {
     let latex = r#"
 \documentclass{article}
 \begin{document}

@@ -2391,6 +2391,7 @@ name = "rust-nix-template"
 version = "0.1.0"
 dependencies = [
  "actix-web",
+ "anyhow",
  "clap 4.5.4",
  "tectonic",
 ]

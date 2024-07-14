@@ -10,14 +10,19 @@ async fn hello() -> impl Responder {
     HttpResponse::UnprocessableEntity().body("Ein Fehler ist aufgetreten.")
 }
 
-async fn gen_pdf() -> Result<Vec<u8>> {
+async fn gen_pdf() -> anyhow::Result<Vec<u8>> {
     let latex = r#"
 \documentclass{article}
 \begin{document}
 Hello, world!
 \end{document}
 "#;
-    tectonic::latex_to_pdf(latex)
+    let res = tectonic::latex_to_pdf(latex);
+    if let Ok(good) = res {
+        return Ok(good);
+    } else {
+        return Err(anyhow::anyhow!("Awa error mommy"));
+    }
 }
 
 #[derive(Parser, Debug)]

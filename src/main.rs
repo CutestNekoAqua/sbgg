@@ -23,7 +23,7 @@ struct Data {
 
 #[get("/")]
 async fn hello(data: web::Query<Data>) -> impl Responder {
-    let keep_gender = data.post_gender.eq("xnone");
+    let keep_gender = !data.post_gender.eq("xnone");
     let res = gen_pdf(
         data.amtname.clone(),
         data.amtstreet.clone(),

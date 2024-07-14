@@ -24,40 +24,40 @@
         <form action="/api">
             <h3>Standesamt</h3>
             <label>Name des Amtes</label><br />
-            <input type="text" id="amtname" name="amtname"><br>
+            <input type="text" id="amtname" name="amtname" required><br>
             <label>Straße & Hausnummer</label><br />
-            <input type="text" id="amtstreet" name="amtstreet"><br>
+            <input type="text" id="amtstreet" name="amtstreet" required><br>
             <label>Postleitzahl & Stadt</label><br />
-            <input type="text" id="amtcity" name="amtcity"><br>
+            <input type="text" id="amtcity" name="amtcity" required><br>
 
             <h3>Persönliche Daten</h3>
             <label>Deine Vornamen, so wie sie bisher in deiner Geburtsurkunde und auf deinem Personalausweis stehen</label><br />
-            <input type="text" id="fname" name="fname"><br>
+            <input type="text" id="fname" name="fname" required><br>
             <label>Nachname</label><br />
-            <input type="text" id="lname" name="lname"><br>
+            <input type="text" id="lname" name="lname" required><br>
             <label>Straße & Hausnummer</label><br />
-            <input type="text" id="street" name="street"><br>
+            <input type="text" id="street" name="street" required><br>
             <label>Postleitzahl & Stadt</label><br />
-            <input type="text" id="city" name="city"><br>
+            <input type="text" id="city" name="city" required><br>
             <label>E-Mail</label><br />
-            <input type="email" id="email" name="email"><br>
+            <input type="email" id="email" name="email" required><br>
             <label>Handy oder Festnetz-Nummer</label><br />
-            <input type="tel" id="phone" name="phone"><br>
+            <input type="tel" id="phone" name="phone" required><br>
             <label>Momentan gemeldetes Geschlecht</label><br /><br />
-            <input class="radio" type="radio" id="divers" name="prev_gender" value="divers">
+            <input class="radio" type="radio" id="divers" name="prev_gender" value="divers" required>
             <label for="divers" class="paper-radio">Divers</label><br><br />
-            <input class="radio" type="radio" id="weiblich" name="prev_gender" value="weiblich">
+            <input class="radio" type="radio" id="weiblich" name="prev_gender" value="weiblich" required>
             <label for="weiblich" class="paper-radio">Weiblich</label><br><br />
-            <input class="radio" type="radio" id="männlich" name="prev_gender" value="männlich">
+            <input class="radio" type="radio" id="männlich" name="prev_gender" value="männlich" required>
             <label for="männlich" class="paper-radio">Männlich</label><br /><br />
-            <input class="radio" type="radio" id="none" name="prev_gender" value="none">
+            <input class="radio" type="radio" id="none" name="prev_gender" value="kein Eintrag" required>
             <label for="none" class="paper-radio">Kein Geschlecht</label>
 
             <h3>Deine Geburt</h3>
             <label>Datum</label><br />
-            <input type="text" id="dob" name="dob"><br>
+            <input type="text" id="dob" name="dob" required><br>
             <label>Ort</label><br />
-            <input type="text" id="birthplace" name="birthplace"><br>
+            <input type="text" id="birthplace" name="birthplace" required><br>
 
             <h3>Deine Identität</h3>
             <b>
@@ -87,13 +87,13 @@
                 }
             </style>
 
-            <input class="radio" type="radio" name="post_gender" value="xdivers">
+            <input class="radio" type="radio" name="post_gender" value="xdivers" required>
             <label for="xdivers" class="paper-radio">Divers</label><br><br />
-            <input class="radio" type="radio" name="post_gender" value="xweiblich">
+            <input class="radio" type="radio" name="post_gender" value="xweiblich" required>
             <label for="xweiblich" class="paper-radio">Weiblich</label><br><br />
-            <input class="radio" type="radio" name="post_gender" value="xmännlich">
+            <input class="radio" type="radio" name="post_gender" value="xmännlich" required>
             <label for="xmännlich" class="paper-radio">Männlich</label><br /><br />
-            <input class="radio" type="radio" name="post_gender" value="xnone">
+            <input class="radio" type="radio" name="post_gender" value="xnone" required>
             <label for="xnone" class="paper-radio">Kein Geschlecht</label>
 
             <br /><br />

@@ -32,6 +32,8 @@
             pkgs.libpng
             pkgs.harfbuzzFull
             pkgs.fontconfig
+            pkgs.lato
+            pkgs.texlivePackages.lato
           ] ++ lib.optionals pkgs.stdenv.isDarwin (
             with pkgs.darwin.apple_sdk.frameworks; [
               IOKit
@@ -60,6 +62,8 @@
             pkgs.libpng
             pkgs.harfbuzzFull
             pkgs.fontconfig
+            pkgs.lato
+            pkgs.texlivePackages.lato
             config.process-compose.cargo-doc-live.outputs.package
           ];
         };

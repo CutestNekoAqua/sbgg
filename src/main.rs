@@ -3,7 +3,21 @@ use clap::Parser;
 
 #[get("/")]
 async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
+    let res = gen_pdf().await;
+    if let Ok(good) = res {
+        return HttpResponse::Ok().body(good);
+    }
+    HttpResponse::UnprocessableEntity().body("Ein Fehler ist aufgetreten.")
+}
+
+async fn gen_pdf() -> Result<Vec<u8>> {
+    let latex = r#"
+\documentclass{article}
+\begin{document}
+Hello, world!
+\end{document}
+"#;
+    tectonic::latex_to_pdf(latex)
 }
 
 #[derive(Parser, Debug)]

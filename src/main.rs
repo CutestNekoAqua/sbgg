@@ -22,7 +22,7 @@ struct Args {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| App::new().service(hello))
-        .bind(("127.0.0.1", 45565))?
+        .bind(("0.0.0.0", 45565))?
         .run()
         .await
 }

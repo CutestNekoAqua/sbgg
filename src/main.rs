@@ -1,4 +1,10 @@
+use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 use clap::Parser;
+
+#[get("/")]
+async fn hello() -> impl Responder {
+    HttpResponse::Ok().body("Hello world!")
+}
 
 #[derive(Parser, Debug)]
 #[clap(author = "Sridhar Ratnakumar", version, about)]
@@ -13,10 +19,10 @@ struct Args {
     name: Option<String>,
 }
 
-fn main() {
-    let args = Args::parse();
-    if args.verbose {
-        println!("DEBUG {args:?}");
-    }
-    println!("Hello {}!", args.name.unwrap_or("world".to_string()));
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| App::new().service(hello))
+        .bind(("127.0.0.1", 45565))?
+        .run()
+        .await
 }

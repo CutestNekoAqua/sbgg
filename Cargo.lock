@@ -2263,6 +2263,7 @@ dependencies = [
  "actix-web",
  "anyhow",
  "clap 4.5.9",
+ "serde",
  "tectonic",
 ]
 

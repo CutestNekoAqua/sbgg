@@ -1,17 +1,74 @@
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 use clap::Parser;
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct Data {
+    amtname: String,
+    amtstreet: String,
+    amtcity: String,
+    fname: String,
+    lname: String,
+    street: String,
+    city: String,
+    email: String,
+    phone: String,
+    dob: String,
+    birthplace: String,
+    change_name: Option<bool>,
+    prev_gender: String,
+    post_gender: String, // remove the x
+    post_fname: Option<String>,
+}
 
 #[get("/")]
-async fn hello() -> impl Responder {
-    let res = gen_pdf();
+async fn hello(data: web::Query<Data>) -> impl Responder {
+    let keep_gender = &data.post_gender.eq("xnone");
+    let res = gen_pdf(
+        data.amtname,
+        data.amtstreet,
+        data.amtcity,
+        data.fname,
+        data.lname,
+        data.street,
+        data.city,
+        data.email,
+        data.phone,
+        data.dob,
+        data.birthplace,
+        data.change_name.unwrap_or(false),
+        keep_gender,
+        data.data.prev_gender,
+        data.post_gender.split("x").collect()[1],
+        data.post_fname.unwrap_or("".to_string()),
+    );
     if let Ok(good) = res {
         return HttpResponse::Ok().body(good);
     }
     HttpResponse::UnprocessableEntity().body("Ein Fehler ist aufgetreten.")
 }
 
-fn gen_pdf() -> anyhow::Result<Vec<u8>> {
-    let latex = r#"
+fn gen_pdf(
+    amtname: String,
+    amtstreet: String,
+    amtcity: String,
+    fname: String,
+    lname: String,
+    street: String,
+    city: String,
+    email: String,
+    phone: String,
+    dob: String,
+    birthplace: String,
+    change_name: bool,
+    keep_gender: bool,
+    prev_gender: String,
+    post_gender: String, // remove the x
+    post_fname: String,
+) -> anyhow::Result<Vec<u8>> {
+    let slashslash = r#"\\"#;
+
+    let mut latex = r#"
 \documentclass[parskip=half,paper=a4]{scrlttr2}
 
 \usepackage{polyglossia}
@@ -39,10 +96,10 @@ fn gen_pdf() -> anyhow::Result<Vec<u8>> {
 \begin{document}
 
 \setkomavar{fromname}{Max Mustermann}
-\setkomavar{date}{1. August. 2024}
+\setkomavar{date}{1. August. 2024} % remove this once past 1st August
 \setkomavar{fromaddress}{strasse\\plzustadt}
 \setkomavar{fromemail}{anon@example.com}
-\setkomavar{fromphone}{+49~221~69\,800\,700}
+\setkomavar{fromphone}{08000800}
 
 \setkomavar{dob}{9. September 1999}
 \setkomavar{birthplace}{Geisterstadt}
@@ -81,7 +138,49 @@ Zur Terminvereinbarung  können Sie mich auch per E‐Mail unter \usekomavar{fro
 
 \end{document}
 
-"#;
+"#.to_string();
+    latex = latex.replace("amtname", &amtname);
+    latex = latex.replace("amtstrasse", &amtstreet);
+    latex = latex.replace("amtstadt", &amtcity);
+
+    latex = latex.replace(
+        "wantsname{true}",
+        "wantsname{" + &change_name.to_string() + "}",
+    );
+    latex = latex.replace(
+        "wantssex{false}",
+        "wantssex{" + &keep_gender.to_string() + "}",
+    );
+
+    latex = latex.replace("{newsex}{weiblich}", "{newsex}{" + &post_gender + "}");
+    latex = latex.replace("{newname}{Erika}", "{newname}{" + &post_fname + "}");
+
+    latex = latex.replace(
+        "{previoussex}{männlich}",
+        "{previoussex}{" + &prev_gender + "}",
+    );
+    latex = latex.replace("{previousname}{Max}", "{previousname}{" + &fname + "}");
+
+    latex = latex.replace("{dob}{9. September 1999}", "{dob}{" + &dob + "}");
+    latex = latex.replace(
+        "{birthplace}{Geisterstadt}",
+        "{birthplace}{" + &birthplace + "}",
+    );
+
+    latex = latex.replace(
+        "{fromname}{Max Mustermann}",
+        "{fromname}{" + &fname + " " + &lname + "}",
+    );
+    latex = latex.replace(
+        "{fromaddress}{strasse\\plzustadt}",
+        "{fromaddress}{" + &street + &slashslash + &city + "}",
+    );
+    latex = latex.replace(
+        "{fromemail}{anon@example.com}",
+        "{fromemail}{" + &email + "}",
+    );
+    latex = latex.replace("{fromphone}{08000800}", "{fromphone}{" + &phone + "}");
+
     let res = tectonic::latex_to_pdf(latex);
     if let Ok(good) = res {
         return Ok(good);

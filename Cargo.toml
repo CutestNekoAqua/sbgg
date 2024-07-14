@@ -11,6 +11,7 @@ version = "0.1.0"
 actix-web = "4.8.0"
 anyhow = "1.0.86"
 clap = { version = "4.3.14", features = ["derive"] }
+serde = "1.0.204"
 tectonic = { version = "0.15.0", default-features = false, features = [
     "external-harfbuzz",
     "geturl-curl",

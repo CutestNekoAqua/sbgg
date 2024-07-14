@@ -40,6 +40,16 @@ struct Args {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    println!("Testing if PDF engine works..");
+    let latex = r#"
+\documentclass{article}
+\begin{document}
+Hello, world!
+\end{document}
+"#;
+    let pdf_data: Vec<u8> = tectonic::latex_to_pdf(latex).expect("processing failed");
+    println!("Success! Output PDF size is {} bytes", pdf_data.len());
+
     HttpServer::new(|| App::new().service(hello))
         .bind(("0.0.0.0", 45565))?
         .run()

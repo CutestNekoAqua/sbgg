@@ -126,7 +126,7 @@ Mein Geschlechtseintrag soll gestrichen werden.
 }
 
 \ifdefstring{\wantsname}{true}{ % true
-Mein \usekomavar*{previousname} \textit{\usekomavar{previousname}} sollen in den neuen Vornamen \textit{\usekomavar{newname}} geändert werden.
+Mein \usekomavar*{previousname} \textit{\usekomavar{previousname}} sollen in den/die neue(n) Vorname(n) \textit{\usekomavar{newname}} geändert werden.
 }
 
 

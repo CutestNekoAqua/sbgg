@@ -23,24 +23,26 @@ struct Data {
 
 #[get("/")]
 async fn hello(data: web::Query<Data>) -> impl Responder {
-    let keep_gender = &data.post_gender.eq("xnone");
+    let keep_gender = data.post_gender.eq("xnone");
     let res = gen_pdf(
-        data.amtname,
-        data.amtstreet,
-        data.amtcity,
-        data.fname,
-        data.lname,
-        data.street,
-        data.city,
-        data.email,
-        data.phone,
-        data.dob,
-        data.birthplace,
-        data.change_name.unwrap_or(false),
-        keep_gender,
-        data.data.prev_gender,
-        data.post_gender.split("x").collect()[1],
-        data.post_fname.unwrap_or("".to_string()),
+        data.amtname.clone(),
+        data.amtstreet.clone(),
+        data.amtcity.clone(),
+        data.fname.clone(),
+        data.lname.clone(),
+        data.street.clone(),
+        data.city.clone(),
+        data.email.clone(),
+        data.phone.clone(),
+        data.dob.clone(),
+        data.birthplace.clone(),
+        data.change_name.clone().unwrap_or(false).clone(),
+        keep_gender.clone(),
+        data.prev_gender.clone(),
+        data.post_gender.clone().split("x").collect::<Vec<_>>()[1]
+            .to_string()
+            .clone(),
+        data.post_fname.clone().unwrap_or("".to_string()).clone(),
     );
     if let Ok(good) = res {
         return HttpResponse::Ok().body(good);
@@ -145,41 +147,56 @@ Zur Terminvereinbarung  können Sie mich auch per E‐Mail unter \usekomavar{fro
 
     latex = latex.replace(
         "wantsname{true}",
-        "wantsname{" + &change_name.to_string() + "}",
+        ("wantsname{".to_owned() + &change_name.to_string() + "}").as_str(),
     );
     latex = latex.replace(
         "wantssex{false}",
-        "wantssex{" + &keep_gender.to_string() + "}",
+        ("wantssex{".to_owned() + &keep_gender.to_string() + "}").as_str(),
     );
 
-    latex = latex.replace("{newsex}{weiblich}", "{newsex}{" + &post_gender + "}");
-    latex = latex.replace("{newname}{Erika}", "{newname}{" + &post_fname + "}");
+    latex = latex.replace(
+        "{newsex}{weiblich}",
+        ("{newsex}{".to_owned() + &post_gender + "}").as_str(),
+    );
+    latex = latex.replace(
+        "{newname}{Erika}",
+        ("{newname}{".to_owned() + &post_fname + "}").as_str(),
+    );
 
     latex = latex.replace(
         "{previoussex}{männlich}",
-        "{previoussex}{" + &prev_gender + "}",
+        ("{previoussex}{".to_owned() + &prev_gender + "}").as_str(),
     );
-    latex = latex.replace("{previousname}{Max}", "{previousname}{" + &fname + "}");
+    latex = latex.replace(
+        "{previousname}{Max}",
+        ("{previousname}{".to_owned() + &fname + "}").as_str(),
+    );
 
-    latex = latex.replace("{dob}{9. September 1999}", "{dob}{" + &dob + "}");
+    latex = latex.replace(
+        "{dob}{9. September 1999}",
+        ("{dob}{".to_owned() + &dob + "}").as_str(),
+    );
     latex = latex.replace(
         "{birthplace}{Geisterstadt}",
-        "{birthplace}{" + &birthplace + "}",
+        ("{birthplace}{".to_owned() + &birthplace + "}").as_str(),
     );
 
     latex = latex.replace(
         "{fromname}{Max Mustermann}",
-        "{fromname}{" + &fname + " " + &lname + "}",
+        ("{fromname}{".to_owned() + &fname + " " + &lname + "}").as_str(),
     );
     latex = latex.replace(
         "{fromaddress}{strasse\\plzustadt}",
-        "{fromaddress}{" + &street + &slashslash + &city + "}",
+        ("{fromaddress}{".to_owned() + &street + &slashslash + &city + "}").as_str(),
     );
     latex = latex.replace(
         "{fromemail}{anon@example.com}",
-        "{fromemail}{" + &email + "}",
+        ("{fromemail}{".to_owned() + &email + "}").as_str(),
     );
-    latex = latex.replace("{fromphone}{08000800}", "{fromphone}{" + &phone + "}");
+    latex = latex.replace(
+        "{fromphone}{08000800}",
+        ("{fromphone}{".to_owned() + &phone + "}").as_str(),
+    );
 
     let res = tectonic::latex_to_pdf(latex);
     if let Ok(good) = res {

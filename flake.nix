@@ -24,7 +24,13 @@
       ];
       perSystem = { config, self', pkgs, lib, ... }: {
         rust-project.crates."rust-nix-template".crane.args = {
-          buildInputs = lib.optionals pkgs.stdenv.isDarwin (
+          buildInputs = [
+            pkgs.openssl
+            pkgs.graphite2
+            pkgs.icu
+            pkgs.freetype
+            pkgs.libpng
+          ] ++ lib.optionals pkgs.stdenv.isDarwin (
             with pkgs.darwin.apple_sdk.frameworks; [
               IOKit
             ]
@@ -45,6 +51,11 @@
           inputsFrom = [ self'.devShells.rust ];
           packages = [
             pkgs.cargo-watch
+            pkgs.openssl
+            pkgs.graphite2
+            pkgs.icu
+            pkgs.freetype
+            pkgs.libpng
             config.process-compose.cargo-doc-live.outputs.package
           ];
         };

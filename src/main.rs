@@ -7,7 +7,7 @@ async fn hello() -> impl Responder {
 }
 
 #[derive(Parser, Debug)]
-#[clap(author = "Sridhar Ratnakumar", version, about)]
+#[clap(author = "April John", version, about)]
 /// Application configuration
 struct Args {
     /// whether to be verbose

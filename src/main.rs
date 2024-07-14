@@ -15,7 +15,7 @@ struct Data {
     phone: String,
     dob: String,
     birthplace: String,
-    change_name: Option<bool>,
+    changename: Option<bool>,
     prev_gender: String,
     post_gender: String, // remove the x
     post_fname: Option<String>,
@@ -36,7 +36,7 @@ async fn hello(data: web::Query<Data>) -> impl Responder {
         data.phone.clone(),
         data.dob.clone(),
         data.birthplace.clone(),
-        data.change_name.clone().unwrap_or(false).clone(),
+        data.changename.clone().unwrap_or(false).clone(),
         keep_gender.clone(),
         data.prev_gender.clone(),
         data.post_gender.clone().split("x").collect::<Vec<_>>()[1]

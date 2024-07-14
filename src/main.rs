@@ -99,7 +99,7 @@ fn gen_pdf(
 
 \setkomavar{fromname}{Max Mustermann}
 \setkomavar{date}{1. August. 2024} % remove this once past 1st August
-\setkomavar{fromaddress}{strasse\\plzustadt}
+\setkomavar{fromaddress}{awwaw}
 \setkomavar{fromemail}{anon@example.com}
 \setkomavar{fromphone}{08000800}
 
@@ -186,7 +186,7 @@ Zur Terminvereinbarung  können Sie mich auch per E‐Mail unter \usekomavar{fro
         ("{fromname}{".to_owned() + &fname + " " + &lname + "}").as_str(),
     );
     latex = latex.replace(
-        "{fromaddress}{strasse\\plzustadt}",
+        "{fromaddress}{awwaw}",
         ("{fromaddress}{".to_owned() + &street + &slashslash + &city + "}").as_str(),
     );
     latex = latex.replace(

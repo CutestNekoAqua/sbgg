@@ -30,6 +30,7 @@
             pkgs.icu
             pkgs.freetype
             pkgs.libpng
+            pkgs.harfbuzzFull
           ] ++ lib.optionals pkgs.stdenv.isDarwin (
             with pkgs.darwin.apple_sdk.frameworks; [
               IOKit
@@ -56,6 +57,7 @@
             pkgs.icu
             pkgs.freetype
             pkgs.libpng
+            pkgs.harfbuzzFull
             config.process-compose.cargo-doc-live.outputs.package
           ];
         };

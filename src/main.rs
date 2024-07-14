@@ -105,7 +105,7 @@ struct Args {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("Testing if PDF engine works..");
+    println!("Downloading needed TeX files and testing if PDF engine works..");
     let latex = r#"
 \documentclass[parskip=half,paper=a4]{scrlttr2}
 

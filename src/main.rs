@@ -12,10 +12,75 @@ async fn hello() -> impl Responder {
 
 fn gen_pdf() -> anyhow::Result<Vec<u8>> {
     let latex = r#"
-\documentclass{article}
+\documentclass[parskip=half,paper=a4]{scrlttr2}
+
+\usepackage{polyglossia}
+\usepackage{fontspec}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\setmainfont{Lato}
+\setsansfont{Lato}
+
+\setdefaultlanguage{german}
+
+\newkomavar
+    [Geburtsdatum]
+    {dob}
+\newkomavar
+    [Geburtsort]
+    {birthplace}
+
+\newkomavar[bisheriger Geschlechtseintrag]{previoussex}
+\newkomavar[bisherige(r) Vorname(n)]{previousname}
+\newkomavar[neuer Geschlechtseintrag]{newsex}
+\newkomavar[neue(r) Vorname(n)]{newname}
+
 \begin{document}
-Hello, world!
+
+\setkomavar{fromname}{Max Mustermann}
+\setkomavar{date}{1. August. 2024}
+\setkomavar{fromaddress}{strasse\\plzustadt}
+\setkomavar{fromemail}{anon@example.com}
+\setkomavar{fromphone}{+49~221~69\,800\,700}
+
+\setkomavar{dob}{9. September 1999}
+\setkomavar{birthplace}{Geisterstadt}
+
+\setkomavar{previoussex}{männlich}
+\setkomavar{previousname}{Max}
+
+\setkomavar{newsex}{weiblich}
+\setkomavar{newname}{Erika}
+
+\newcommand\wantsname{true}
+\newcommand\wantssex{false}
+
+\begin{letter}{amtname, amtstrasse, amtstadt}
+\opening{Sehr geehrte Sachbearbeiter*innen,}
+hiermit melde ich, \usekomavar{fromname}, geboren am \usekomavar{dob} in \usekomavar{birthplace}, die Änderung meines Geschlechtseintrags und Vornamens nach §4 SBGG an.
+
+\ifdefstring{\wantssex}{true}{ % true
+Mein \usekomavar*{previoussex} \textit{\usekomavar{previoussex}} sollen in den neuen Geschlechtseintrag \textit{\usekomavar{newsex}} geändert werden.
+}{%false
+Mein Geschlechtseintrag soll gestrichen werden.
+}
+
+\ifdefstring{\wantsname}{true}{ % true
+Mein \usekomavar*{previousname} \textit{\usekomavar{previousname}} sollen in den neuen Vornamen \textit{\usekomavar{newname}} geändert werden.
+}
+
+
+Zur Abgabe der Erklärung [nach § 2 SBGG] würde ich gerne einen Termin mit Ihnen vereinbaren.
+
+Zur Terminvereinbarung  können Sie mich auch per E‐Mail unter \usekomavar{fromemail} oder telefonisch unter \usekomavar{fromphone} erreichen.
+
+\closing{Mit freundlichen Grüßen}
+(Unterschrift)
+\end{letter}
+
 \end{document}
+
 "#;
     let res = tectonic::latex_to_pdf(latex);
     if let Ok(good) = res {

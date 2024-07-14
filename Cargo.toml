@@ -10,4 +10,4 @@ version = "0.1.0"
 [dependencies]
 actix-web = "4.8.0"
 clap = { version = "4.3.14", features = ["derive"] }
-tectonic = "0.15.0"
+tectonic = { version = "0.15.0", features = ["external-harfbuzz"] }

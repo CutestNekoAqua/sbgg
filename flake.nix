@@ -34,9 +34,12 @@
             pkgs.fontconfig
             pkgs.lato
             pkgs.texlivePackages.lato
+            pkgs.curl
           ] ++ lib.optionals pkgs.stdenv.isDarwin (
             with pkgs.darwin.apple_sdk.frameworks; [
               IOKit
+              ApplicationServices
+              Cocoa
             ]
           );
         };

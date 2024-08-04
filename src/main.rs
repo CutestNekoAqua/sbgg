@@ -114,6 +114,8 @@ fn gen_pdf(
 \newcommand\wantsname{true}
 \newcommand\wantssex{false}
 
+\setkomavar{date}{5. August. 2024}
+
 \begin{letter}{amtname\\amtstrasse\\amtstadt}
 \opening{Sehr geehrte Sachbearbeiter*innen,}
 hiermit melde ich, \usekomavar{fromname}, geboren am \usekomavar{dob} in \usekomavar{birthplace}, die Änderung meines Geschlechtseintrags und Vornamens nach §4 SBGG an.
